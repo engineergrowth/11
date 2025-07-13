@@ -129,7 +129,7 @@ export function SpeechToText() {
             <Button
               size="lg"
               onClick={() => handleTranscribe(recordedBlob)}
-              className="hover:bg-sidebar-primary hover:text-sidebar-primary-foreground transition-colors"
+              className="hover:bg-sidebar-primary hover:text-sidebar-primary-foreground transition-colors ml-4"
             >
               <Upload className="w-4 h-4 mr-2" />
               Transcribe Recording

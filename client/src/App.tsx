@@ -17,6 +17,7 @@ import { SoundEffects } from "@/pages/SoundEffects";
 import { Voices } from "@/pages/Voices";
 import { ForcedAlignment } from "@/pages/ForcedAlignment";
 import { ConversationalAI } from "@/pages/ConversationalAI";
+import { VoiceClone } from "@/pages/VoiceClone";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -41,6 +42,7 @@ const App = () => (
               <Route path="/voices" element={<Voices />} />
               <Route path="/forced-alignment" element={<ForcedAlignment />} />
               <Route path="/conversational-ai" element={<ConversationalAI />} />
+              <Route path="/voice-clone" element={<VoiceClone />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </AppLayout>

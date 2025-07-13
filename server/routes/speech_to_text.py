@@ -7,11 +7,12 @@ load_dotenv()
 
 router = APIRouter()
 
-ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
+ELEVEN_API_KEY = os.getenv("ELEVENLABS_API_KEY")
+BASE_URL = "https://api.elevenlabs.io"
 
 @router.post("/speech-to-text")
 async def speech_to_text(file: UploadFile = File(...)):
-    if not ELEVENLABS_API_KEY:
+    if not ELEVEN_API_KEY:
         raise HTTPException(status_code=500, detail="Missing ElevenLabs API key")
 
     form_data = {
@@ -20,13 +21,13 @@ async def speech_to_text(file: UploadFile = File(...)):
     }
 
     headers = {
-        "xi-api-key": ELEVENLABS_API_KEY,
+        "xi-api-key": ELEVEN_API_KEY,
     }
 
     try:
         async with httpx.AsyncClient() as client:
             response = await client.post(
-                "https://api.elevenlabs.io/v1/speech-to-text",
+                f"{BASE_URL}/v1/speech-to-text",
                 headers=headers,
                 files=form_data
             )
