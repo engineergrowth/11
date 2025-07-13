@@ -116,7 +116,11 @@ export function VoiceClone() {
             Please record at least <b>1 minute</b> and up to <b>3 minutes</b> of your voice for best results.
           </div>
           <div className="flex items-center gap-4">
-            <Button onClick={handleRecording} variant={isRecording ? "destructive" : "default"}>
+            <Button 
+              onClick={handleRecording} 
+              variant={isRecording ? "destructive" : "default"}
+              disabled={!voiceName.trim()}
+            >
               <Mic className={`w-4 h-4 mr-2 ${isRecording ? "animate-pulse" : ""}`} />
               {isRecording ? "Stop Recording" : "Start Recording"}
             </Button>
@@ -130,6 +134,9 @@ export function VoiceClone() {
               </Button>
             )}
           </div>
+          {!voiceName.trim() && (
+            <div className="text-xs text-red-500">Please enter a voice name before recording.</div>
+          )}
           {recordedBlob && (
             <div className="space-y-2">
               <audio controls src={audioUrl!} className="w-full" />

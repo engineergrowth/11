@@ -2,7 +2,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { AudioLines, Mic, ArrowRight, Copy } from "lucide-react";
+import { AudioLines, Mic, ArrowRight, Copy, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const features = [
@@ -24,10 +24,17 @@ const features = [
   {
     title: "Voice Clone",
     description: "Clone your voice and generate speech with it",
-    icon: Copy, // change to Copy
+    icon: Copy,
     path: "/voice-clone",
     color: "from-purple-500 to-purple-600",
     badge: "New"
+  },
+  {
+    title: "Sound Effects",
+    description: "Generate custom sound effects from text descriptions",
+    icon: Sparkles,
+    path: "/sound-effects",
+    color: "from-orange-500 to-orange-600"
   }
 ];
 
