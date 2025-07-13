@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Mic, Upload, FileAudio, Copy } from "lucide-react";
 
 export function SpeechToText() {
+  const [mode, setMode] = useState<"upload" | "record" | null>(null);
   const [isRecording, setIsRecording] = useState(false);
   const [transcription, setTranscription] = useState("");
   const [audioFile, setAudioFile] = useState<File | null>(null);
@@ -53,59 +54,87 @@ export function SpeechToText() {
   };
 
   const demoComponent = (
-    <div className="space-y-4">
-      <div className="space-y-2">
-        <label className="text-sm font-medium">Upload an audio file</label>
-        <input
-          type="file"
-          accept="audio/*"
-          onChange={(e) => {
-            setAudioFile(e.target.files?.[0] || null);
-            setRecordedBlob(null); // clear recorded if switching to upload
+    <div className="space-y-6">
+      <div className="flex gap-4">
+        <Button
+          variant={mode === "upload" ? "default" : "outline"}
+          onClick={() => {
+            setMode("upload");
+            setAudioFile(null);
+            setRecordedBlob(null);
           }}
-          className="block w-full text-sm text-muted-foreground"
-        />
+        >
+          <Upload className="w-4 h-4 mr-2" />
+          Upload Audio File
+        </Button>
+        <Button
+          variant={mode === "record" ? "default" : "outline"}
+          onClick={() => {
+            setMode("record");
+            setAudioFile(null);
+            setRecordedBlob(null);
+          }}
+        >
+          <Mic className="w-4 h-4 mr-2" />
+          Record Audio
+        </Button>
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
-        <Button
-          onClick={handleRecording}
-          size="lg"
-          variant={isRecording ? "destructive" : "default"}
-        >
-          <Mic className={`w-4 h-4 mr-2 ${isRecording ? "animate-pulse" : ""}`} />
-          {isRecording ? "Stop Recording" : "Start Recording"}
-        </Button>
+      {!mode && (
+        <p className="text-sm text-muted-foreground italic">Choose an option above to get started.</p>
+      )}
 
-        {audioFile && (
+      {mode === "upload" && (
+        <div className="space-y-4">
+          <input
+            type="file"
+            accept="audio/*"
+            onChange={(e) => setAudioFile(e.target.files?.[0] || null)}
+            className="block w-full text-sm text-muted-foreground"
+          />
+
           <Button
             size="lg"
-            onClick={() => handleTranscribe(audioFile)}
+            onClick={() => audioFile && handleTranscribe(audioFile)}
+            disabled={!audioFile}
             className="hover:bg-sidebar-primary hover:text-sidebar-primary-foreground transition-colors"
           >
             <Upload className="w-4 h-4 mr-2" />
             Transcribe Upload
           </Button>
-        )}
+        </div>
+      )}
 
-        {recordedBlob && !isRecording && (
+      {mode === "record" && (
+        <div className="space-y-4">
           <Button
+            onClick={handleRecording}
             size="lg"
-            onClick={() => handleTranscribe(recordedBlob)}
-            className="hover:bg-sidebar-primary hover:text-sidebar-primary-foreground transition-colors"
+            variant={isRecording ? "destructive" : "default"}
           >
-            <Upload className="w-4 h-4 mr-2" />
-            Transcribe Recording
+            <Mic className={`w-4 h-4 mr-2 ${isRecording ? "animate-pulse" : ""}`} />
+            {isRecording ? "Stop Recording" : "Start Recording"}
           </Button>
-        )}
-      </div>
 
-      {isRecording && (
-        <div className="p-4 bg-red-500/10 rounded-2xl border border-red-500/20">
-          <div className="flex items-center gap-3">
-            <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
-            <span className="text-red-400 font-medium">Recording in progress...</span>
-          </div>
+          {isRecording && (
+            <div className="p-4 bg-red-500/10 rounded-2xl border border-red-500/20">
+              <div className="flex items-center gap-3">
+                <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+                <span className="text-red-400 font-medium">Recording in progress...</span>
+              </div>
+            </div>
+          )}
+
+          {recordedBlob && !isRecording && (
+            <Button
+              size="lg"
+              onClick={() => handleTranscribe(recordedBlob)}
+              className="hover:bg-sidebar-primary hover:text-sidebar-primary-foreground transition-colors"
+            >
+              <Upload className="w-4 h-4 mr-2" />
+              Transcribe Recording
+            </Button>
+          )}
         </div>
       )}
 
