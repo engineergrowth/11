@@ -56,7 +56,7 @@ export function FeatureLayout({
             <CardHeader>
               <CardTitle className="text-xl flex items-center gap-2">
                 <span className="w-2 h-2 bg-neon-blue rounded-full"></span>
-                What it does
+                What This Feature Does
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -68,7 +68,7 @@ export function FeatureLayout({
             <CardHeader>
               <CardTitle className="text-xl flex items-center gap-2">
                 <span className="w-2 h-2 bg-neon-green rounded-full"></span>
-                Use Case
+                Use Cases
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -81,7 +81,7 @@ export function FeatureLayout({
               <CardHeader>
                 <CardTitle className="text-xl flex items-center gap-2">
                   <span className="w-2 h-2 bg-neon-purple rounded-full"></span>
-                  How it works
+                  How The Demo Works
                 </CardTitle>
               </CardHeader>
               <CardContent>

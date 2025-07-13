@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
 
-from routes import text_to_speech, speech_to_text, text_to_dialogue, voice_changer, voice_isolator, dubbing, sound_effects, voices, forced_alignment, conversational_ai
+from routes import text_to_speech, speech_to_text, voice_changer, voice_isolator, dubbing, sound_effects, voices, forced_alignment, conversational_ai
 
 load_dotenv()
 
@@ -25,7 +25,6 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 # Register all routers
 app.include_router(text_to_speech.router)
 app.include_router(speech_to_text.router)
-app.include_router(text_to_dialogue.router)
 app.include_router(voice_changer.router)
 app.include_router(voice_isolator.router)
 app.include_router(dubbing.router)

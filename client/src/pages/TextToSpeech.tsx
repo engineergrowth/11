@@ -1,14 +1,43 @@
-
+import { useState } from "react";
 import { FeatureLayout } from "@/components/FeatureLayout";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { AudioLines, Play, Download } from "lucide-react";
-import { useState } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { AudioLines, Play } from "lucide-react";
 
 export function TextToSpeech() {
-  const [text, setText] = useState("Hello! This is a sample text that will be converted to speech using ElevenLabs AI.");
-  const [voice, setVoice] = useState("sarah");
+  const [text, setText] = useState("Hello! This is a sample text for ElevenLabs.");
+  const [voice, setVoice] = useState("EXAVITQu4vr4xnSDxMaL"); // default to Sarah
+  const [audioUrl, setAudioUrl] = useState("");
+
+  const handleGenerateSpeech = async () => {
+    const formData = new FormData();
+    formData.append("text", text);
+    formData.append("voice_id", voice);
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/text-to-speech`, {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to generate speech");
+      }
+
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      setAudioUrl(url);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   const demoComponent = (
     <div className="space-y-4">
@@ -21,7 +50,7 @@ export function TextToSpeech() {
           className="min-h-[100px] neon-border focus:border-primary/60"
         />
       </div>
-      
+
       <div className="space-y-2">
         <label className="text-sm font-medium">Select Voice</label>
         <Select value={voice} onValueChange={setVoice}>
@@ -29,32 +58,38 @@ export function TextToSpeech() {
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="sarah">Sarah - Professional</SelectItem>
-            <SelectItem value="daniel">Daniel - Conversational</SelectItem>
-            <SelectItem value="rachel">Rachel - Energetic</SelectItem>
-            <SelectItem value="adam">Adam - Deep & Warm</SelectItem>
+            <SelectItem value="EXAVITQu4vr4xnSDxMaL">Sarah</SelectItem>
+            <SelectItem value="N2lVS1w4EtoT3dr4eOWO">Callum</SelectItem>
+            <SelectItem value="SAz9YHcvj6GT2YYXdXww">River</SelectItem>
+            <SelectItem value="XrExE9yKIg1WjnnlVkGX">Matilda</SelectItem>
+            <SelectItem value="cjVigY5qzO86Huf0OWal">Eric</SelectItem>
           </SelectContent>
         </Select>
       </div>
 
       <div className="flex gap-2">
-        <Button className="flex-1 hover-scale" size="lg">
+      <Button
+        className="flex-1 hover:bg-sidebar-primary hover:text-sidebar-primary-foreground transition-colors"
+        size="lg"
+        onClick={handleGenerateSpeech}
+      >
           <Play className="w-4 h-4 mr-2" />
           Generate Speech
-        </Button>
-        <Button variant="outline" size="lg" className="neon-border hover-glow">
-          <Download className="w-4 h-4" />
         </Button>
       </div>
 
       <div className="p-4 bg-muted/20 rounded-2xl border border-border/40">
         <div className="flex items-center gap-2 mb-2">
-          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-          <span className="text-sm text-muted-foreground">Audio Preview</span>
+          <AudioLines className="w-4 h-4 text-primary" />
+          <span className="text-sm font-medium">Generated Audio</span>
         </div>
-        <div className="w-full h-2 bg-border rounded-full overflow-hidden">
-          <div className="h-full bg-gradient-to-r from-neon-blue to-neon-purple w-3/4 rounded-full"></div>
-        </div>
+        {audioUrl ? (
+          <audio controls src={audioUrl} className="w-full rounded-lg" />
+        ) : (
+          <div className="w-full h-16 bg-muted/40 rounded-lg flex items-center justify-center border-2 border-dashed border-muted-foreground/20">
+            <span className="text-sm text-muted-foreground">Click "Generate Speech" to create audio</span>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -65,10 +100,10 @@ export function TextToSpeech() {
       description="Transform written text into natural, human-like speech"
       badge="Most Popular"
       icon={<AudioLines className="w-6 h-6 text-primary" />}
-      whatItDoes="Converts any written text into high-quality, natural-sounding speech using advanced AI voice synthesis. Choose from dozens of unique voices with different accents, tones, and speaking styles."
-      useCase="Perfect for content creators making audiobooks, podcasters creating intros, educators developing accessible learning materials, or businesses adding voice to their applications and customer experiences."
+      whatItDoes="Converts any written text into high-quality, natural-sounding speech using advanced AI voice synthesis."
+      useCase="Perfect for creators, podcasters, educators, or businesses adding voice to their content."
+      howItWorks="Uses deep neural networks trained on massive datasets to synthesize natural speech based on selected voice and text."
       demoComponent={demoComponent}
-      howItWorks="Uses deep neural networks trained on massive datasets of human speech to understand linguistic patterns, emotional context, and pronunciation nuances. The AI analyzes text structure and generates audio that matches natural human speech rhythms and intonation."
     />
   );
 }
