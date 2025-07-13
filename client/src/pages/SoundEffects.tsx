@@ -3,24 +3,60 @@ import { FeatureLayout } from "@/components/FeatureLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Sparkles, Play, Download, Wand2, Volume2 } from "lucide-react";
+import { Slider } from "@/components/ui/slider";
+import { Sparkles, Wand2, Download, Volume2, Info } from "lucide-react";
 import { useState } from "react";
 
 export function SoundEffects() {
-  const [prompt, setPrompt] = useState("thunderstorm with heavy rain and wind");
-  
-  const presetEffects = [
-    { name: "Ocean waves", category: "Nature" },
-    { name: "City traffic", category: "Urban" },
-    { name: "Campfire crackling", category: "Nature" },
-    { name: "Spaceship engine", category: "Sci-Fi" },
-    { name: "Medieval battle", category: "Fantasy" },
-    { name: "Coffee shop ambience", category: "Indoor" }
-  ];
+  const [prompt, setPrompt] = useState("");
+  const [duration, setDuration] = useState([5]);
+  const [influence, setInfluence] = useState([0.3]);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [audioUrl, setAudioUrl] = useState<string | null>(null);
+
+  const handleGenerate = async () => {
+    if (!prompt.trim()) return;
+    
+    setIsGenerating(true);
+    try {
+      const formData = new FormData();
+      formData.append("text", prompt);
+      formData.append("duration_seconds", duration[0].toString());
+      formData.append("prompt_influence", influence[0].toString());
+      
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/sound-effects`, {
+        method: "POST",
+        body: formData,
+      });
+      
+      if (!response.ok) {
+        throw new Error("Failed to generate sound effect");
+      }
+      
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      setAudioUrl(url);
+    } catch (error) {
+      console.error("Error generating sound effect:", error);
+      // You could add a toast notification here
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const handleDownload = () => {
+    if (!audioUrl) return;
+    
+    const link = document.createElement('a');
+    link.href = audioUrl;
+    link.download = `sound_effect_${Date.now()}.mp3`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   const demoComponent = (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <div className="space-y-2">
         <label className="text-sm font-medium">Describe the sound effect</label>
         <Input
@@ -31,73 +67,76 @@ export function SoundEffects() {
         />
       </div>
 
-      <div className="space-y-2">
-        <label className="text-sm font-medium">Quick Presets</label>
-        <div className="flex flex-wrap gap-2">
-          {presetEffects.map((effect) => (
-            <Badge
-              key={effect.name}
-              variant="outline"
-              className="cursor-pointer hover:bg-primary/10 hover:border-primary/40 transition-colors"
-              onClick={() => setPrompt(effect.name)}
-            >
-              {effect.name}
-            </Badge>
-          ))}
+      <div className="space-y-4">
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Duration (seconds)</label>
+          <div className="flex items-center gap-4">
+            <Slider
+              value={duration}
+              onValueChange={setDuration}
+              max={22}
+              min={0.5}
+              step={0.5}
+              className="flex-1"
+            />
+            <span className="text-sm font-mono min-w-[3rem]">{duration[0]}s</span>
+          </div>
+          <p className="text-xs text-muted-foreground">Between 0.5 and 22 seconds</p>
+        </div>
+
+        <div className="space-y-2">
+          <div className="flex items-center gap-2">
+            <label className="text-sm font-medium">Prompt Influence</label>
+            <Info className="w-4 h-4 text-muted-foreground" />
+          </div>
+          <div className="flex items-center gap-4">
+            <Slider
+              value={influence}
+              onValueChange={setInfluence}
+              max={1}
+              min={0}
+              step={0.1}
+              className="flex-1"
+            />
+            <span className="text-sm font-mono min-w-[3rem]">{influence[0]}</span>
+          </div>
+          <p className="text-xs text-muted-foreground">
+            Higher values make the generation follow your prompt more closely but reduce variety. Lower values create more diverse but potentially less accurate results.
+          </p>
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-3">
-        <Button className="hover-scale">
-          <Wand2 className="w-4 h-4 mr-2" />
-          Generate Sound
+        <Button 
+          className="hover-scale" 
+          onClick={handleGenerate}
+          disabled={isGenerating || !prompt.trim()}
+        >
+          <Wand2 className={`w-4 h-4 mr-2 ${isGenerating ? 'animate-spin' : ''}`} />
+          {isGenerating ? 'Generating...' : 'Generate Sound'}
         </Button>
-        <Button variant="outline" className="neon-border hover-glow">
+        <Button 
+          variant="outline" 
+          className="neon-border hover-glow"
+          onClick={handleDownload}
+          disabled={!audioUrl}
+        >
           <Download className="w-4 h-4 mr-2" />
           Download
         </Button>
       </div>
 
-      <Card className="neon-border">
-        <CardContent className="p-4">
-          <div className="flex items-center gap-2 mb-3">
-            <Volume2 className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium">Generated Sound Effect</span>
-          </div>
-          <div className="space-y-3">
-            <div className="p-3 bg-muted/20 rounded-lg">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium">Thunderstorm.wav</span>
-                <Button variant="ghost" size="sm">
-                  <Play className="w-4 h-4" />
-                </Button>
-              </div>
-              <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                <span>Duration: 30s</span>
-                <span>•</span>
-                <span>Quality: High</span>
-                <span>•</span>
-                <span>Format: WAV</span>
-              </div>
+      {audioUrl && (
+        <Card className="neon-border">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <Volume2 className="w-4 h-4 text-primary" />
+              <span className="text-sm font-medium">Generated Sound Effect</span>
             </div>
-            
-            <div className="grid grid-cols-3 gap-2 text-center text-xs">
-              <div>
-                <div className="text-primary font-medium">8.2/10</div>
-                <div className="text-muted-foreground">Realism</div>
-              </div>
-              <div>
-                <div className="text-primary font-medium">44.1kHz</div>
-                <div className="text-muted-foreground">Sample Rate</div>
-              </div>
-              <div>
-                <div className="text-primary font-medium">Stereo</div>
-                <div className="text-muted-foreground">Channels</div>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+            <audio controls src={audioUrl} className="w-full rounded-lg" />
+          </CardContent>
+        </Card>
+      )}
 
       <Card className="neon-border bg-gradient-to-r from-purple-500/10 to-pink-500/10 border-purple-500/20">
         <CardContent className="p-4">
@@ -117,7 +156,6 @@ export function SoundEffects() {
     <FeatureLayout
       title="Sound Effects"
       description="Generate custom sound effects from text descriptions"
-      badge="BETA"
       icon={<Sparkles className="w-6 h-6 text-primary" />}
       whatItDoes="Creates realistic sound effects from simple text descriptions using advanced AI audio synthesis. Generate everything from natural environmental sounds to complex mechanical noises, all customized to your specific requirements and creative vision."
       useCase="Perfect for game developers needing custom audio assets, filmmakers creating atmospheric soundscapes, podcasters adding ambient effects, content creators enhancing their videos, musicians seeking unique sound layers, or anyone needing copyright-free audio effects."
