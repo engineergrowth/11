@@ -48,14 +48,35 @@ export function Dashboard() {
   return (
     <div className="p-6 space-y-8 animate-fade-in">
       {/* Hero Section */}
-      <div className="text-center space-y-6 py-12">
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
-          Welcome to the ElevenLabs Demo
-        </h1>
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Hi, I'm Blake, a Solutions Engineer. I built this demo site to showcase the features of ElevenLabs. I am not associated with them, and this is not an official ElevenLabs product. This site is under construction and I'll be adding more features soon!<br/>
-          <span className="block mt-2">Check out the code on <a href="https://github.com/engineergrowth/11" target="_blank" rel="noopener noreferrer" className="underline text-primary hover:text-primary/80">GitHub</a>.</span>
-        </p>
+      <div className="border-b border-border/40 pb-12 mb-8">
+        <div className="max-w-4xl mx-auto text-center space-y-6">
+          <div className="space-y-4">
+            <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-foreground">
+              ElevenLabs API Demo
+            </h1>
+          </div>
+          
+          <div className="max-w-3xl mx-auto space-y-4 pt-4">
+            <p className="text-base text-muted-foreground leading-relaxed">
+              Hi, I'm <a href="https://www.linkedin.com/in/blake-geard/" target="_blank" rel="noopener noreferrer" className="text-foreground font-medium hover:text-primary transition-colors">Blake</a>, a Solutions Engineer. I built this demo to showcase ElevenLabs' capabilities. 
+              This is not an official ElevenLabs product. It's a technical demonstration of their API features.
+            </p>
+            <p className="text-sm text-muted-foreground/80">
+              Currently under development with more features being added regularly.
+            </p>
+            <div className="pt-2">
+              <a 
+                href="https://github.com/engineergrowth/11" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors group"
+              >
+                <span>View source code</span>
+                <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Features Grid */}
