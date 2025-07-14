@@ -32,5 +32,7 @@ Thumbs.db
 # Bun
 bun.lockb
 
+.vite
+
 # Static/demo audio (if you want to ignore generated audio, but keep placeholder files, adjust as needed)
 # server/static/audio/*.mp3

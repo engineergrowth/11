@@ -108,7 +108,7 @@ export function SoundEffects() {
 
       <div className="grid grid-cols-2 gap-3">
         <Button 
-          className="hover-scale" 
+          className="hover:bg-sidebar-primary hover:text-sidebar-primary-foreground transition-colors" 
           onClick={handleGenerate}
           disabled={isGenerating || !prompt.trim()}
         >

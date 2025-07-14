@@ -181,7 +181,7 @@ export function VoiceDesign() {
       </div>
 
       <Button 
-        className="w-full hover-scale" 
+        className="w-full hover:bg-sidebar-primary hover:text-sidebar-primary-foreground transition-colors" 
         onClick={handleGenerate}
         disabled={isGenerating || !voiceDescription.trim() || (!autoGenerateText && !customText.trim())}
       >

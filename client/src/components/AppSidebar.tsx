@@ -30,15 +30,9 @@ const navigationItems = [
   { title: "Home", url: "/", icon: Home },
   { title: "Text to Speech", url: "/text-to-speech", icon: AudioLines },
   { title: "Speech to Text", url: "/speech-to-text", icon: Mic },
-  { title: "Voice Clone", url: "/voice-clone", icon: Copy }, // change to Copy
+  { title: "Voice Clone", url: "/voice-clone", icon: Copy },
   { title: "Voice Design", url: "/voice-design", icon: Palette },
-  // { title: "Voice Changer", url: "/voice-changer", icon: Volume2 },
-  // { title: "Voice Isolator", url: "/voice-isolator", icon: Filter },
-  // { title: "Dubbing", url: "/dubbing", icon: Languages },
   { title: "Sound Effects", url: "/sound-effects", icon: Sparkles },
-  // { title: "Voices", url: "/voices", icon: Users },
-  // { title: "Forced Alignment", url: "/forced-alignment", icon: AlignLeft },
-  // { title: "Conversational AI", url: "/conversational-ai", icon: Bot },
 ];
 
 export function AppSidebar() {

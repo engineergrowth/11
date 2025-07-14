@@ -3,7 +3,6 @@ import httpx
 import os
 from dotenv import load_dotenv
 from typing import Optional
-import logging
 
 load_dotenv()
 
@@ -48,28 +47,10 @@ async def design_voice(
     if quality is not None:
         payload["quality"] = quality
 
-    print(f"Making request to ElevenLabs with payload: {payload}")
-
     try:
         async with httpx.AsyncClient() as client:
             response = await client.post(url, headers=headers, json=payload)
-            print(f"ElevenLabs response status: {response.status_code}")
-            print(f"ElevenLabs response: {response.text}")
-            
-            if response.status_code != 200:
-                error_detail = response.text
-                print(f"ElevenLabs API error: {error_detail}")
-                raise HTTPException(
-                    status_code=response.status_code, 
-                    detail=f"ElevenLabs API error: {error_detail}"
-                )
-            
+            response.raise_for_status()
             return response.json()
     except httpx.HTTPError as e:
-        print(f"HTTP Error: {e}")
-        print(f"Error response: {e.response.text if hasattr(e, 'response') else 'No response'}")
-        raise HTTPException(status_code=500, detail=f"Error designing voice: {e}")
-    except Exception as e:
-        print(f"Unexpected error: {e}")
-        print(f"Error type: {type(e)}")
-        raise HTTPException(status_code=500, detail=f"Unexpected error: {e}") 
+        raise HTTPException(status_code=500, detail=f"Error designing voice: {e}") 

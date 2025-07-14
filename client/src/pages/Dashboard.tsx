@@ -2,7 +2,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { AudioLines, Mic, ArrowRight, Copy, Sparkles } from "lucide-react";
+import { AudioLines, Mic, ArrowRight, Copy, Sparkles, Palette } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const features = [
@@ -34,6 +34,13 @@ const features = [
     icon: Sparkles,
     path: "/sound-effects",
     color: "from-orange-500 to-orange-600"
+  },
+  {
+    title: "Voice Design",
+    description: "Create custom AI voices from text descriptions",
+    icon: Palette,
+    path: "/voice-design",
+    color: "from-pink-500 to-pink-600"
   }
 ];
 
@@ -46,8 +53,8 @@ export function Dashboard() {
           Welcome to the ElevenLabs Demo
         </h1>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Hi, I'm Blake, a Solutions Engineer. I built this demo site to showcase the features of ElevenLabs. I am not associated with them, and this is not an official ElevenLabs product. <b>This site is under construction and I'll be adding more features soon!</b><br/>
-          <span className="block mt-2">Check out the code or contribute on <a href="https://github.com/engineergrowth/11" target="_blank" rel="noopener noreferrer" className="underline text-primary hover:text-primary/80">GitHub</a>.</span>
+          Hi, I'm Blake, a Solutions Engineer. I built this demo site to showcase the features of ElevenLabs. I am not associated with them, and this is not an official ElevenLabs product. This site is under construction and I'll be adding more features soon!<br/>
+          <span className="block mt-2">Check out the code on <a href="https://github.com/engineergrowth/11" target="_blank" rel="noopener noreferrer" className="underline text-primary hover:text-primary/80">GitHub</a>.</span>
         </p>
       </div>
 
