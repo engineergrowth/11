@@ -11,25 +11,47 @@ export function SpeechToText() {
   const [audioFile, setAudioFile] = useState<File | null>(null);
   const [recordedBlob, setRecordedBlob] = useState<Blob | null>(null);
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
+  const [permissionError, setPermissionError] = useState<string | null>(null);
 
   const handleRecording = async () => {
     if (isRecording) {
       mediaRecorder?.stop();
       setIsRecording(false);
+      setPermissionError(null);
     } else {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const recorder = new MediaRecorder(stream);
-      const chunks: BlobPart[] = [];
+      try {
+        setPermissionError(null);
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const recorder = new MediaRecorder(stream);
+        const chunks: BlobPart[] = [];
 
-      recorder.ondataavailable = (e) => chunks.push(e.data);
-      recorder.onstop = () => {
-        const blob = new Blob(chunks, { type: "audio/webm" });
-        setRecordedBlob(blob);
-      };
+        recorder.ondataavailable = (e) => chunks.push(e.data);
+        recorder.onstop = () => {
+          const blob = new Blob(chunks, { type: "audio/webm" });
+          setRecordedBlob(blob);
+          // Stop all tracks to release the microphone
+          stream.getTracks().forEach(track => track.stop());
+        };
 
-      recorder.start();
-      setMediaRecorder(recorder);
-      setIsRecording(true);
+        recorder.start();
+        setMediaRecorder(recorder);
+        setIsRecording(true);
+      } catch (error) {
+        console.error("Microphone access error:", error);
+        if (error instanceof Error) {
+          if (error.name === 'NotAllowedError') {
+            setPermissionError("Microphone access was denied. Please allow microphone permissions in your browser and try again.");
+          } else if (error.name === 'NotFoundError') {
+            setPermissionError("No microphone found. Please connect a microphone and try again.");
+          } else if (error.name === 'NotReadableError') {
+            setPermissionError("Microphone is already in use by another application. Please close other apps using the microphone.");
+          } else {
+            setPermissionError(`Microphone error: ${error.message}`);
+          }
+        } else {
+          setPermissionError("An unexpected error occurred while accessing the microphone.");
+        }
+      }
     }
   };
 
@@ -115,6 +137,26 @@ export function SpeechToText() {
             <Mic className={`w-4 h-4 mr-2 ${isRecording ? "animate-pulse" : ""}`} />
             {isRecording ? "Stop Recording" : "Start Recording"}
           </Button>
+
+          {permissionError && (
+            <div className="p-4 bg-red-500/10 rounded-2xl border border-red-500/20">
+              <div className="flex items-start gap-3">
+                <div className="w-3 h-3 bg-red-500 rounded-full mt-1.5 flex-shrink-0"></div>
+                <div className="space-y-2">
+                  <span className="text-red-400 font-medium">Microphone Permission Error</span>
+                  <p className="text-red-300 text-sm leading-relaxed">{permissionError}</p>
+                  <div className="text-xs text-red-300/80 space-y-1">
+                    <p><strong>How to fix:</strong></p>
+                    <ul className="list-disc list-inside space-y-1 ml-2">
+                      <li>Click the microphone icon in your browser's address bar</li>
+                      <li>Select "Allow" for microphone access</li>
+                      <li>Refresh the page and try again</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
           {isRecording && (
             <div className="p-4 bg-red-500/10 rounded-2xl border border-red-500/20">
