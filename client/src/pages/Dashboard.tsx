@@ -27,7 +27,6 @@ const features = [
     icon: Copy,
     path: "/voice-clone",
     color: "from-purple-500 to-purple-600",
-    badge: "New"
   },
   {
     title: "Sound Effects",

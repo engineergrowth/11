@@ -10,8 +10,8 @@ import {
   AlignLeft, 
   Bot,
   Home,
-  Copy, // add Copy icon
-
+  Copy,
+  Palette,
 } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import {
@@ -31,6 +31,7 @@ const navigationItems = [
   { title: "Text to Speech", url: "/text-to-speech", icon: AudioLines },
   { title: "Speech to Text", url: "/speech-to-text", icon: Mic },
   { title: "Voice Clone", url: "/voice-clone", icon: Copy }, // change to Copy
+  { title: "Voice Design", url: "/voice-design", icon: Palette },
   // { title: "Voice Changer", url: "/voice-changer", icon: Volume2 },
   // { title: "Voice Isolator", url: "/voice-isolator", icon: Filter },
   // { title: "Dubbing", url: "/dubbing", icon: Languages },

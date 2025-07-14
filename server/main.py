@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
 
-from routes import text_to_speech, speech_to_text, voice_changer, voice_isolator, dubbing, sound_effects, voices, forced_alignment, conversational_ai, add_voice
+from routes import text_to_speech, speech_to_text, voice_changer, voice_isolator, dubbing, sound_effects, voices, forced_alignment, conversational_ai, add_voice, voice_design
 
 load_dotenv()
 
@@ -33,6 +33,7 @@ app.include_router(voices.router)
 app.include_router(forced_alignment.router)
 app.include_router(conversational_ai.router)
 app.include_router(add_voice.router)
+app.include_router(voice_design.router)
 
 @app.get("/")
 def root():
@@ -40,6 +41,6 @@ def root():
         "message": "Welcome to the ElevenLabs Feature Showcase API!",
         "info": "See /docs for interactive API documentation.",
         "features": [
-            "text-to-speech", "speech-to-text", "voice-changer", "voice-isolator", "dubbing", "sound-effects", "voices", "forced-alignment", "conversational-ai"
+            "text-to-speech", "speech-to-text", "voice-changer", "voice-isolator", "dubbing", "sound-effects", "voices", "forced-alignment", "conversational-ai", "design-voice"
         ]
     } 

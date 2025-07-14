@@ -9,15 +9,14 @@ import { AppLayout } from "@/components/AppLayout";
 import { Dashboard } from "@/pages/Dashboard";
 import { TextToSpeech } from "@/pages/TextToSpeech";
 import { SpeechToText } from "@/pages/SpeechToText";
-import { TextToDialogue } from "@/pages/TextToDialogue";
 import { VoiceChanger } from "@/pages/VoiceChanger";
 import { VoiceIsolator } from "@/pages/VoiceIsolator";
 import { Dubbing } from "@/pages/Dubbing";
 import { SoundEffects } from "@/pages/SoundEffects";
-import { Voices } from "@/pages/Voices";
 import { ForcedAlignment } from "@/pages/ForcedAlignment";
 import { ConversationalAI } from "@/pages/ConversationalAI";
 import { VoiceClone } from "@/pages/VoiceClone";
+import { VoiceDesign } from "@/pages/VoiceDesign";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -34,15 +33,14 @@ const App = () => (
               <Route path="/" element={<Dashboard />} />
               <Route path="/text-to-speech" element={<TextToSpeech />} />
               <Route path="/speech-to-text" element={<SpeechToText />} />
-              <Route path="/text-to-dialogue" element={<TextToDialogue />} />
               <Route path="/voice-changer" element={<VoiceChanger />} />
               <Route path="/voice-isolator" element={<VoiceIsolator />} />
               <Route path="/dubbing" element={<Dubbing />} />
               <Route path="/sound-effects" element={<SoundEffects />} />
-              <Route path="/voices" element={<Voices />} />
               <Route path="/forced-alignment" element={<ForcedAlignment />} />
               <Route path="/conversational-ai" element={<ConversationalAI />} />
               <Route path="/voice-clone" element={<VoiceClone />} />
+              <Route path="/voice-design" element={<VoiceDesign />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </AppLayout>
