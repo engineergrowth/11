@@ -163,11 +163,11 @@ export function SpeechToText() {
   return (
     <FeatureLayout
       title="Speech to Text"
-      description="Convert audio recordings into accurate, formatted text"
+      description="Turn audio into clean, readable text"
       icon={<Mic className="w-6 h-6 text-primary" />}
-      whatItDoes="Automatically transcribes spoken words from audio files or live recordings into accurate text. Handles multiple languages, accents, and speaking styles with industry-leading accuracy and proper punctuation."
-      useCase="Essential for journalists transcribing interviews, students converting lecture recordings to notes, businesses creating meeting summaries, podcasters generating episode transcripts, and accessibility applications for hearing-impaired users."
-      howItWorks="Utilizes advanced automatic speech recognition (ASR) powered by neural networks. It processes waveforms, identifies patterns, and outputs formatted text with punctuation and speaker detection."
+      whatItDoes="Transcribes audio from files or live recordings into accurate text with proper formatting. Great for different languages, speaking styles, and clear punctuation."
+      useCase="People use this to turn interviews, meetings, lectures, and podcasts into clean, readable transcripts. Journalists save hours writing up quotes, students use it to turn classes into notes, and businesses rely on it for meeting summaries. It's also a big help for accessibility, giving hearing-impaired users a way to follow spoken content in real time."
+      howItWorks="You upload a file or record live audio. We send it to ElevenLabs’ Speech to Text API, and it returns polished text with punctuation. It can handle speaker changes and different speaking styles, so the results are easy to read and ready to use."
       demoComponent={demoComponent}
     />
   );
