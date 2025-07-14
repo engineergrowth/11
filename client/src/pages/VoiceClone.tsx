@@ -16,6 +16,7 @@ export function VoiceClone() {
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const [step, setStep] = useState<'record' | 'cloned'>('record');
   const [attemptedRecord, setAttemptedRecord] = useState(false);
+  const [permissionError, setPermissionError] = useState<string | null>(null);
 
   const MIN_SECONDS = 60;
   const MAX_SECONDS = 180;
@@ -25,36 +26,57 @@ export function VoiceClone() {
     if (isRecording) {
       mediaRecorder?.stop();
       setIsRecording(false);
+      setPermissionError(null);
       if (timerRef.current) clearInterval(timerRef.current);
     } else {
       if (!voiceName.trim()) return;
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const recorder = new MediaRecorder(stream);
-      const chunks: BlobPart[] = [];
+      try {
+        setPermissionError(null);
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const recorder = new MediaRecorder(stream);
+        const chunks: BlobPart[] = [];
 
-      recorder.ondataavailable = (e) => chunks.push(e.data);
-      recorder.onstop = () => {
-        const blob = new Blob(chunks, { type: "audio/webm" });
-        setRecordedBlob(blob);
-        const url = URL.createObjectURL(blob);
-        setAudioUrl(url);
-      };
+        recorder.ondataavailable = (e) => chunks.push(e.data);
+        recorder.onstop = () => {
+          const blob = new Blob(chunks, { type: "audio/webm" });
+          setRecordedBlob(blob);
+          const url = URL.createObjectURL(blob);
+          setAudioUrl(url);
+          // Stop all tracks to release the microphone
+          stream.getTracks().forEach(track => track.stop());
+        };
 
-      recorder.start();
-      setMediaRecorder(recorder);
-      setIsRecording(true);
-      setTimer(0);
-      timerRef.current = setInterval(() => {
-        setTimer((t) => {
-          if (t + 1 >= MAX_SECONDS) {
-            recorder.stop();
-            setIsRecording(false);
-            if (timerRef.current) clearInterval(timerRef.current);
-            return MAX_SECONDS;
+        recorder.start();
+        setMediaRecorder(recorder);
+        setIsRecording(true);
+        setTimer(0);
+        timerRef.current = setInterval(() => {
+          setTimer((t) => {
+            if (t + 1 >= MAX_SECONDS) {
+              recorder.stop();
+              setIsRecording(false);
+              if (timerRef.current) clearInterval(timerRef.current);
+              return MAX_SECONDS;
+            }
+            return t + 1;
+          });
+        }, 1000);
+      } catch (error) {
+        console.error("Microphone access error:", error);
+        if (error instanceof Error) {
+          if (error.name === 'NotAllowedError') {
+            setPermissionError("Microphone access was denied. Please allow microphone permissions in your browser and try again.");
+          } else if (error.name === 'NotFoundError') {
+            setPermissionError("No microphone found. Please connect a microphone and try again.");
+          } else if (error.name === 'NotReadableError') {
+            setPermissionError("Microphone is already in use by another application. Please close other apps using the microphone.");
+          } else {
+            setPermissionError(`Microphone error: ${error.message}`);
           }
-          return t + 1;
-        });
-      }, 1000);
+        } else {
+          setPermissionError("An unexpected error occurred while accessing the microphone.");
+        }
+      }
     }
   };
 
@@ -136,6 +158,25 @@ export function VoiceClone() {
               </Button>
             )}
           </div>
+          {permissionError && (
+            <div className="p-4 bg-red-500/10 rounded-2xl border border-red-500/20">
+              <div className="flex items-start gap-3">
+                <div className="w-3 h-3 bg-red-500 rounded-full mt-1.5 flex-shrink-0"></div>
+                <div className="space-y-2">
+                  <span className="text-red-400 font-medium">Microphone Permission Error</span>
+                  <p className="text-red-300 text-sm leading-relaxed">{permissionError}</p>
+                  <div className="text-xs text-red-300/80 space-y-1">
+                    <p><strong>How to fix:</strong></p>
+                    <ul className="list-disc list-inside space-y-1 ml-2">
+                      <li>Click the microphone icon in your browser's address bar</li>
+                      <li>Select "Allow" for microphone access</li>
+                      <li>Refresh the page and try again</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
           {!voiceName.trim() && attemptedRecord && (
             <div className="text-xs text-red-500">Please enter a voice name before recording.</div>
           )}
