@@ -167,7 +167,7 @@ export function SpeechToText() {
       icon={<Mic className="w-6 h-6 text-primary" />}
       whatItDoes="Transcribes audio from files or live recordings into accurate text with proper formatting. Great for different languages, speaking styles, and clear punctuation."
       useCase="People use this to turn interviews, meetings, lectures, and podcasts into clean, readable transcripts. Journalists save hours writing up quotes, students use it to turn classes into notes, and businesses rely on it for meeting summaries. It's also a big help for accessibility, giving hearing-impaired users a way to follow spoken content in real time."
-      howItWorks="You upload a file or record live audio. We send it to ElevenLabs’ Speech to Text API, and it returns polished text with punctuation."
+      howItWorks="You upload a file or record live audio. We send it to ElevenLabs’ Speech to Text API, and it returns polished text."
       demoComponent={demoComponent}
     />
   );
