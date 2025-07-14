@@ -100,9 +100,9 @@ export function TextToSpeech() {
       description="Transform written text into natural, human-like speech"
       badge="Most Popular"
       icon={<AudioLines className="w-6 h-6 text-primary" />}
-      whatItDoes="Converts any written text into high-quality, natural-sounding speech using advanced AI voice synthesis."
-      useCase="Perfect for creators, podcasters, educators, or businesses adding voice to their content."
-      howItWorks="Uses deep neural networks trained on massive datasets to synthesize natural speech based on selected voice and text."
+      whatItDoes="Takes any text and turns it into natural-sounding speech using realistic voice models."
+      useCase="People use this to create audiobooks without hiring voice actors. Publishers speed up production. It’s great for narrating social posts, turning blog articles into audio, and adding voice to videos, marketing, or training. Teachers make lessons more engaging, and it helps blind or low-vision users with more natural playback than most screen readers. Basically, if it needs a voice, this can handle it."
+      howItWorks="You type in some text, we send it to the ElevenLabs API, and it gives us back the voice. Then we just play the audio right in the app."
       demoComponent={demoComponent}
     />
   );

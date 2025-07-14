@@ -16,16 +16,19 @@ export function VoiceClone() {
   const [timer, setTimer] = useState(0);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const [step, setStep] = useState<'record' | 'cloned'>('record');
+  const [attemptedRecord, setAttemptedRecord] = useState(false);
 
   const MIN_SECONDS = 60;
   const MAX_SECONDS = 180;
 
   const handleRecording = async () => {
+    setAttemptedRecord(true);
     if (isRecording) {
       mediaRecorder?.stop();
       setIsRecording(false);
       if (timerRef.current) clearInterval(timerRef.current);
     } else {
+      if (!voiceName.trim()) return;
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const recorder = new MediaRecorder(stream);
       const chunks: BlobPart[] = [];
@@ -134,7 +137,7 @@ export function VoiceClone() {
               </Button>
             )}
           </div>
-          {!voiceName.trim() && (
+          {!voiceName.trim() && attemptedRecord && (
             <div className="text-xs text-red-500">Please enter a voice name before recording.</div>
           )}
           {recordedBlob && (

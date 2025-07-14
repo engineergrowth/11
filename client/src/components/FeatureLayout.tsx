@@ -54,8 +54,7 @@ export function FeatureLayout({
         <div className="space-y-6">
           <Card className="neon-border hover-glow">
             <CardHeader>
-              <CardTitle className="text-xl flex items-center gap-2">
-                <span className="w-2 h-2 bg-neon-blue rounded-full"></span>
+              <CardTitle className="text-xl font-semibold">
                 What This Feature Does
               </CardTitle>
             </CardHeader>
@@ -66,8 +65,7 @@ export function FeatureLayout({
 
           <Card className="neon-border hover-glow">
             <CardHeader>
-              <CardTitle className="text-xl flex items-center gap-2">
-                <span className="w-2 h-2 bg-neon-green rounded-full"></span>
+              <CardTitle className="text-xl font-semibold">
                 Use Cases
               </CardTitle>
             </CardHeader>
@@ -79,8 +77,7 @@ export function FeatureLayout({
           {howItWorks && (
             <Card className="neon-border hover-glow">
               <CardHeader>
-                <CardTitle className="text-xl flex items-center gap-2">
-                  <span className="w-2 h-2 bg-neon-purple rounded-full"></span>
+                <CardTitle className="text-xl font-semibold">
                   How The Demo Works
                 </CardTitle>
               </CardHeader>
@@ -95,8 +92,7 @@ export function FeatureLayout({
         <div className="space-y-6">
           <Card className="neon-border hover-glow h-fit">
             <CardHeader>
-              <CardTitle className="text-xl flex items-center gap-2">
-                <span className="w-2 h-2 bg-gradient-to-r from-neon-blue to-neon-purple rounded-full"></span>
+              <CardTitle className="text-xl font-semibold">
                 Demo & Simulation
               </CardTitle>
               <CardDescription>
@@ -107,7 +103,6 @@ export function FeatureLayout({
               {demoComponent}
             </CardContent>
           </Card>
-          
           {children}
         </div>
       </div>
