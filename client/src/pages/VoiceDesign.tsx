@@ -261,12 +261,12 @@ export function VoiceDesign() {
   return (
     <FeatureLayout
       title="Voice Design"
-      description="Create custom AI voices from text descriptions"
+      description="Create custom voices just by describing them in plain English"
       icon={<Palette className="w-6 h-6 text-primary" />}
-      whatItDoes="Designs custom AI voices using natural language descriptions. Generate multiple voice previews and choose the one that best matches your vision."
-      useCase="Perfect for content creators needing unique character voices, game developers creating distinct NPCs, podcasters wanting custom narrators, or anyone needing personalized AI voices."
+      whatItDoes="Lets you describe the kind of voice you want using natural language. The system generates multiple voice previews you can listen to and use in other features like text to speech."
+      useCase="Used by creators who want character voices for animations or storytelling. Game developers use it to bring NPCs to life. Podcasters use it to give their shows a unique tone. It also works well for prototyping branded voices or building custom assistants for apps or devices."
+      howItWorks="You write a short description of the voice you want to create. You can let the app generate sample text or enter your own. Then you adjust a few sliders to fine-tune the output. Loudness controls the volume, quality affects the clarity and detail of the voice, and guidance scale changes how strictly the voice follows your description. Once you hit generate, the app sends that to ElevenLabs and returns a few different voice previews. You can listen to each one or download them."
       demoComponent={demoComponent}
-      howItWorks="Uses advanced AI models to interpret your voice description and generate multiple voice samples. Each preview includes a unique voice ID that can be used for text-to-speech generation."
     />
   );
 } 

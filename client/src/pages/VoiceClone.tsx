@@ -1,7 +1,6 @@
 import { useState, useRef } from "react";
 import { FeatureLayout } from "@/components/FeatureLayout";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Mic, Upload, FileAudio, Copy } from "lucide-react";
 
@@ -198,12 +197,13 @@ export function VoiceClone() {
   return (
     <FeatureLayout
       title="Voice Cloning"
-      description="Clone your voice and generate speech with it"
+      description="Clone your voice and use it to speak any text"
       icon={<Mic className="w-6 h-6 text-primary" />}
-      whatItDoes="Clones your voice using ElevenLabs, then lets you type and generate speech in your own voice."
-      useCase="Perfect for creating personalized content, custom AI characters, or just showing off your AI clone."
-      howItWorks="Records your voice, sends it to ElevenLabs for cloning, and returns a new voice_id. Then uses that ID to generate speech."
+      whatItDoes="Lets you record your voice and create a custom AI version of it. Once your voice is cloned, you can type anything and hear it read back in your own voice."
+      useCase="Great for creators who want their own voice in content without always recording. You can build custom AI avatars, voice your blog posts, narrate videos, or create characters for games and storytelling. Some people even use it for accessibility tools or to preserve a loved one’s voice."
+      howItWorks="You give your voice a name then record between one and three minutes of audio. The app sends the sample to ElevenLabs, which returns a new voice based on your recording. You can then use that cloned voice to generate speech from any text you type using the Text to Speech feature."
       demoComponent={demoComponent}
     />
+
   );
 }
