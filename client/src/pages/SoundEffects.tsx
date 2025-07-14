@@ -155,12 +155,12 @@ export function SoundEffects() {
   return (
     <FeatureLayout
       title="Sound Effects"
-      description="Generate custom sound effects from text descriptions"
+      description="Generate custom sound effects from plain text"
       icon={<Sparkles className="w-6 h-6 text-primary" />}
-      whatItDoes="Creates realistic sound effects from simple text descriptions using advanced AI audio synthesis. Generate everything from natural environmental sounds to complex mechanical noises, all customized to your specific requirements and creative vision."
-      useCase="Perfect for game developers needing custom audio assets, filmmakers creating atmospheric soundscapes, podcasters adding ambient effects, content creators enhancing their videos, musicians seeking unique sound layers, or anyone needing copyright-free audio effects."
+      whatItDoes="Lets you describe a sound with words and instantly generate a matching audio effect. You can adjust duration and control how closely the sound sticks to your prompt."
+      useCase="Used by game developers who need specific in-game sounds. Filmmakers add ambient background noise without hunting through libraries. Podcasters and YouTubers use it to add atmosphere or transitions. It’s also helpful for musicians looking to experiment with unique textures or layers."
+      howItWorks="You type a description of the sound you want, like 'glitchy robot startup' or 'calm ocean waves at night.' You can adjust how long the sound is and how strongly it follows your prompt. When you hit generate, the app sends that to ElevenLabs and gets back a sound you can play or download."
       demoComponent={demoComponent}
-      howItWorks="Uses cutting-edge generative AI models trained on vast libraries of real-world sounds. The system interprets text descriptions, understands acoustic properties and environmental contexts, then synthesizes audio that matches the specified characteristics using advanced diffusion models and spectral synthesis techniques."
     />
   );
 }
