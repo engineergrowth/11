@@ -2,7 +2,7 @@
 
 **A comprehensive showcase of ElevenLabs AI audio features built with modern web technologies.**
 
-🌐 **Live Demo**: [https://11-labs-demo.netlify.app/](https://11-labs-demo.netlify.app/)
+🌐 **Live Demo**: [https://elevenlabs-demo.netlify.app/](https://elevenlabs-demo.netlify.app/)
 
 > **Disclaimer:** This project is not affiliated with ElevenLabs, nor is it an official ElevenLabs product. It is an independent demo created for educational and exploratory purposes only.
 
