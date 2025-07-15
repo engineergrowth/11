@@ -1,14 +1,10 @@
 from fastapi import APIRouter, Form, HTTPException
 from starlette.responses import StreamingResponse
 import httpx
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
+from config import ELEVEN_API_KEY
 
 router = APIRouter()
 
-ELEVEN_API_KEY = os.getenv("ELEVENLABS_API_KEY")
 BASE_URL = "https://api.elevenlabs.io"
 
 @router.post("/text-to-speech")

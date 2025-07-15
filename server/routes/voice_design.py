@@ -1,14 +1,10 @@
 from fastapi import APIRouter, Form, HTTPException
 import httpx
-import os
-from dotenv import load_dotenv
 from typing import Optional
-
-load_dotenv()
+from config import ELEVEN_API_KEY
 
 router = APIRouter()
 
-ELEVEN_API_KEY = os.getenv("ELEVENLABS_API_KEY")
 BASE_URL = "https://api.elevenlabs.io"
 
 @router.post("/design-voice")
@@ -41,7 +37,6 @@ async def design_voice(
         "loudness": loudness,
         "guidance_scale": guidance_scale
     }
-    
     if text and text.strip():
         payload["text"] = text
     if quality is not None:
